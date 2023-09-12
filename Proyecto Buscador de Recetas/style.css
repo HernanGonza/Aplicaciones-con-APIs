@@ -1,0 +1,21 @@
+body {
+    background-color: chocolate;
+    text-align: center;
+}
+
+
+
+#contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: black;
+}
+
+#contenedor2 {
+    margin-left: 800px;
+}
+
+#ingrediente{
+    margin-top: 30px;
+}
