@@ -72,6 +72,10 @@ async function buscarCiudad() {
             const sensacion_termica = document.createElement('p');
             sensacion_termica.textContent = infoClima.current.feelslike_c + '°C';
             clima_actual.appendChild(sensacion_termica);
+            const mapa = document.createElement('iframe');
+            mapa.src = `https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d774237.2162586577!2d${infoClima.location.lon}!3d${infoClima.location.lat}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1694564774025!5m2!1ses-419!2sar" width="600" height="450" style="border:0;" allowfullscreen="true" loading="" referrerpolicy="no-referrer-when-downgrade`;
+            clima_actual.appendChild(mapa);
+           
 
             switch (infoClima.current.condition.text) {
                 case 'Sunny':
