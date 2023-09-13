@@ -25,29 +25,31 @@ async function buscarCiudad() {
             clima_actual.appendChild(nombreCiudad);
             const salto1 = document.createElement('br');
             clima_actual.appendChild(salto1);
-            const titulo_tempratura_actual = document.createElement('h3');
-            titulo_tempratura_actual.textContent = 'Temperatura actual';
-            clima_actual.appendChild(titulo_tempratura_actual);
-            const temperatura_actual = document.createElement('p');
-            temperatura_actual.textContent = infoClima.current.temp_c + '°C';
-            clima_actual.appendChild(temperatura_actual);
-            const salto2 = document.createElement('br');
-            clima_actual.appendChild(salto2);
-            const div_actual = document.createElement('div');
-            div_actual.classList.add('actual');
-            clima_actual.appendChild(div_actual);
-            const titulo_condiciones_actuales = document.createElement('h1');
-            titulo_condiciones_actuales.textContent = 'Condiciones actuales';
-            div_actual.appendChild(titulo_condiciones_actuales);
+            
             const condicion_actual = document.createElement('p');
             condicion_actual.textContent = infoClima.current.condition.text;
-            titulo_condiciones_actuales.appendChild(condicion_actual);
+            clima_actual.appendChild(condicion_actual);
             const condicion_actual_icono = document.createElement('img');
             condicion_actual_icono.src = infoClima.current.condition.icon;
             condicion_actual_icono.style.width = '200px';
             condicion_actual_icono.style.height = '200px';
             condicion_actual_icono.style.marginBottom = '70px';
-            titulo_condiciones_actuales.appendChild(condicion_actual_icono);
+            clima_actual.appendChild(condicion_actual_icono);
+
+            const div_actual = document.createElement('div');
+            div_actual.classList.add('actual');
+            clima_actual.appendChild(div_actual);
+            const titulo_tempratura_actual = document.createElement('h3');
+            titulo_tempratura_actual.textContent = 'Temperatura actual';
+            div_actual.appendChild(titulo_tempratura_actual);
+            const temperatura_actual = document.createElement('p');
+            temperatura_actual.textContent = infoClima.current.temp_c + '°C';
+            titulo_tempratura_actual.appendChild(temperatura_actual);
+            const salto2 = document.createElement('br');
+            clima_actual.appendChild(salto2);
+            
+            
+            
             const salto3 = document.createElement('br');
             clima_actual.appendChild(salto3);
             const sensacion_termica_titulo = document.createElement('h3');
@@ -86,34 +88,9 @@ async function buscarCiudad() {
             mapa.classList.add('mapa');
             mapa.src = `https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d774237.2162586577!2d${infoClima.location.lon}!3d${infoClima.location.lat}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1694564774025!5m2!1ses-419!2sar" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade`;
             clima_actual.appendChild(mapa);
-
-            const div_forecast = document.createElement('div');
-            div_forecast.classList.add('forecast');
-            clima_actual.appendChild(div_forecast);
-
-            const div_dia = []; // Array para almacenar los divs
-
-            for (let i = 0; i < infoClima5dias.forecast.forecastday.length; i++) {
-                div_dia[i] = document.createElement('div'); // Crear un div para cada índice
-                const dia = infoClima5dias.forecast.forecastday[i];
-                const elemento = document.createElement('p');
-                elemento.textContent = 'Fecha: ' + dia.date;
-                const tempMaxima = document.createElement('p');
-                tempMaxima.textContent = 'Temperatura Maxima: ' + dia.day.maxtemp_c;
-                const tempMinima = document.createElement('p');
-                tempMinima.textContent = 'Temperatura Minima: ' + dia.day.mintemp_c;
-                const icono = document.createElement('img');
-                icono.src = dia.day.condition.icon;
-                const condicion = document.createElement('p');
-                condicion.textContent = 'Condicion: ' + dia.day.condition.text;
-                div_dia[i].appendChild(elemento);
-                div_dia[i].appendChild(tempMaxima);
-                div_dia[i].appendChild(tempMinima);
-                div_dia[i].appendChild(icono);
-                div_dia[i].appendChild(condicion);
-                div_forecast.appendChild(div_dia[i]);
-            }
-
+            const cincoDias = document.createElement('h3');
+            cincoDias.textContent = 'Pronóstico de 5 dias';
+            clima_actual.appendChild(cincoDias);
 
             switch (infoClima.current.condition.text) {
                 case 'Sunny':
@@ -361,7 +338,37 @@ async function buscarCiudad() {
                     clima_actual.style.color = 'black';
                     condicion_actual.textContent = 'Nieve moderada o fuerte con truenos';
                     break;
+            }
 
+
+            
+            const div_forecast = document.createElement('div');
+            div_forecast.classList.add('forecast');
+            clima_actual.appendChild(div_forecast);
+
+            const div_dia = []; // Array para almacenar los divs
+
+            for (let i = 0; i < infoClima5dias.forecast.forecastday.length; i++) {
+                div_dia[i] = document.createElement('div'); // Crear un div para cada índice
+                const dia = infoClima5dias.forecast.forecastday[i];
+                const elemento = document.createElement('p');
+                elemento.textContent = dia.date;
+                const tempMaxima = document.createElement('p');
+                tempMaxima.textContent = 'Temperatura Maxima: ' + dia.day.maxtemp_c;
+                const tempMinima = document.createElement('p');
+                tempMinima.textContent = 'Temperatura Minima: ' + dia.day.mintemp_c;
+                const icono = document.createElement('img');
+                icono.src = dia.day.condition.icon;
+                const condicion = document.createElement('p');
+                condicion.textContent = dia.day.condition.text;
+                div_dia[i].appendChild(elemento);
+                div_dia[i].appendChild(tempMaxima);
+                div_dia[i].appendChild(tempMinima);
+                div_dia[i].appendChild(icono);
+                div_dia[i].appendChild(condicion);
+                div_forecast.appendChild(div_dia[i]);
+
+                
             }
 
             input_ciudad.value = '';
