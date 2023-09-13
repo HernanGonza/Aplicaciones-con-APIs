@@ -4,7 +4,7 @@ const clima_actual = document.getElementById('clima_actual');
 let video = document.getElementById('video');
 
 async function buscarCiudad() {
-    
+
     clima_actual.style.backgroundColor = '';
     clima_actual.style.borderStyle = '';
     video.src = '';
@@ -17,7 +17,9 @@ async function buscarCiudad() {
             const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=6ee8d07c5b04493fb74113918230409&q=${ciudad}`);
             const infoClima = await response.json();
 
-            
+            const lista_cinco_dias = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=6ee8d07c5b04493fb74113918230409&q=${ciudad}&days=5`);
+            const infoClima5dias = await lista_cinco_dias.json();
+
             const nombreCiudad = document.createElement('h2');
             nombreCiudad.textContent = 'Clima actual en ' + infoClima.location.name + ", " + infoClima.location.region + ", " + infoClima.location.country;
             clima_actual.appendChild(nombreCiudad);
@@ -31,51 +33,87 @@ async function buscarCiudad() {
             clima_actual.appendChild(temperatura_actual);
             const salto2 = document.createElement('br');
             clima_actual.appendChild(salto2);
-            const titulo_condiciones_actuales = document.createElement('h3');
+            const div_actual = document.createElement('div');
+            div_actual.classList.add('actual');
+            clima_actual.appendChild(div_actual);
+            const titulo_condiciones_actuales = document.createElement('h1');
             titulo_condiciones_actuales.textContent = 'Condiciones actuales';
-            clima_actual.appendChild(titulo_condiciones_actuales);
+            div_actual.appendChild(titulo_condiciones_actuales);
             const condicion_actual = document.createElement('p');
             condicion_actual.textContent = infoClima.current.condition.text;
-            clima_actual.appendChild(condicion_actual);
+            titulo_condiciones_actuales.appendChild(condicion_actual);
             const condicion_actual_icono = document.createElement('img');
             condicion_actual_icono.src = infoClima.current.condition.icon;
-            clima_actual.appendChild(condicion_actual_icono);
+            condicion_actual_icono.style.width = '200px';
+            condicion_actual_icono.style.height = '200px';
+            condicion_actual_icono.style.marginBottom = '70px';
+            titulo_condiciones_actuales.appendChild(condicion_actual_icono);
             const salto3 = document.createElement('br');
             clima_actual.appendChild(salto3);
+            const sensacion_termica_titulo = document.createElement('h3');
+            sensacion_termica_titulo.textContent = 'Sensacion termica';
+            div_actual.appendChild(sensacion_termica_titulo);
+            const sensacion_termica = document.createElement('p');
+            sensacion_termica.textContent = infoClima.current.feelslike_c + '°C';
+            sensacion_termica_titulo.appendChild(sensacion_termica);
+            
+            const div_viento = document.createElement('div');
+            div_viento.classList.add('viento');
+            clima_actual.appendChild(div_viento);
             const direccion_viento_titulo = document.createElement('h3');
             direccion_viento_titulo.textContent = 'Direccion del viento';
-            clima_actual.appendChild(direccion_viento_titulo);
+            div_viento.appendChild(direccion_viento_titulo);
             const direccion_viento = document.createElement('p');
             direccion_viento.textContent = infoClima.current.wind_dir;
-            clima_actual.appendChild(direccion_viento);
-            const salto4 = document.createElement('br');
-            clima_actual.appendChild(salto4);
+            direccion_viento_titulo.appendChild(direccion_viento);
             const velocidad_viento_titulo = document.createElement('h3');
             velocidad_viento_titulo.textContent = 'Velocidad del viento';
-            clima_actual.appendChild(velocidad_viento_titulo);
+            div_viento.appendChild(velocidad_viento_titulo);
             const velocidad_viento = document.createElement('p');
             velocidad_viento.textContent = infoClima.current.wind_kph + ' km/h';
-            clima_actual.appendChild(velocidad_viento);
+            velocidad_viento_titulo.appendChild(velocidad_viento);
             const salto5 = document.createElement('br');
             clima_actual.appendChild(salto5);
             const humedad_actual_titulo = document.createElement('h3');
             humedad_actual_titulo.textContent = 'Humedad actual';
-            clima_actual.appendChild(humedad_actual_titulo);
+            div_viento.appendChild(humedad_actual_titulo);
             const humedad_actual = document.createElement('p');
             humedad_actual.textContent = infoClima.current.humidity + ' %';
-            clima_actual.appendChild(humedad_actual);
+            humedad_actual_titulo.appendChild(humedad_actual);
             const salto6 = document.createElement('br');
             clima_actual.appendChild(salto6);
-            const sensacion_termica_titulo = document.createElement('h3');
-            sensacion_termica_titulo.textContent = 'Sensacion termica';
-            clima_actual.appendChild(sensacion_termica_titulo);
-            const sensacion_termica = document.createElement('p');
-            sensacion_termica.textContent = infoClima.current.feelslike_c + '°C';
-            clima_actual.appendChild(sensacion_termica);
             const mapa = document.createElement('iframe');
-            mapa.src = `https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d774237.2162586577!2d${infoClima.location.lon}!3d${infoClima.location.lat}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1694564774025!5m2!1ses-419!2sar" width="600" height="450" style="border:0;" allowfullscreen="true" loading="" referrerpolicy="no-referrer-when-downgrade`;
+            mapa.classList.add('mapa');
+            mapa.src = `https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d774237.2162586577!2d${infoClima.location.lon}!3d${infoClima.location.lat}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1694564774025!5m2!1ses-419!2sar" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade`;
             clima_actual.appendChild(mapa);
-           
+
+            const div_forecast = document.createElement('div');
+            div_forecast.classList.add('forecast');
+            clima_actual.appendChild(div_forecast);
+
+            const div_dia = []; // Array para almacenar los divs
+
+            for (let i = 0; i < infoClima5dias.forecast.forecastday.length; i++) {
+                div_dia[i] = document.createElement('div'); // Crear un div para cada índice
+                const dia = infoClima5dias.forecast.forecastday[i];
+                const elemento = document.createElement('p');
+                elemento.textContent = 'Fecha: ' + dia.date;
+                const tempMaxima = document.createElement('p');
+                tempMaxima.textContent = 'Temperatura Maxima: ' + dia.day.maxtemp_c;
+                const tempMinima = document.createElement('p');
+                tempMinima.textContent = 'Temperatura Minima: ' + dia.day.mintemp_c;
+                const icono = document.createElement('img');
+                icono.src = dia.day.condition.icon;
+                const condicion = document.createElement('p');
+                condicion.textContent = 'Condicion: ' + dia.day.condition.text;
+                div_dia[i].appendChild(elemento);
+                div_dia[i].appendChild(tempMaxima);
+                div_dia[i].appendChild(tempMinima);
+                div_dia[i].appendChild(icono);
+                div_dia[i].appendChild(condicion);
+                div_forecast.appendChild(div_dia[i]);
+            }
+
 
             switch (infoClima.current.condition.text) {
                 case 'Sunny':
@@ -343,7 +381,7 @@ async function buscarCiudad() {
             clima_actual.style.backgroundColor = 'red';
             video.src = 'videos/error.mp4';
             input_ciudad.value = '';
-            
+
         }
     }
 }
