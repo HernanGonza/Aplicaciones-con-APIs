@@ -8,6 +8,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: olive;
+
 }
 
 
@@ -23,8 +24,54 @@ h1 {
     align-items: center;
     justify-content: space-evenly;
     color: black;
+
 }
 
 #contenedor2 {
     margin-left: 800px;
+
+}
+
+#nav_bar {
+    background-color: blue;
+    position: absolute;
+}
+
+#navbarNav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#listado_libros {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.card {
+    margin : 20px;
+    background-color: brown;
+}
+
+.card-title {
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    
+}
+
+.btn {
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.btn:hover {
+    background-color: greenyellow;
+    color: black;
+    font-weight: bold;
+    transform: scale(1.2);
+    
 }

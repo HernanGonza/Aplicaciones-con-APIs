@@ -41,11 +41,33 @@
             </div>
         </div>
     </nav>
-
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid" id="nav_bar">
+          <a class="navbar-brand" href="#">Tienda de libros</a>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Carrito
+                    <span id="badge_carrito" class="badge"></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     <h1>Tienda de libros en linea</h1>
 
+    <input type="text" placeholder="Busque el libro por título o por autor" id="input_buscar" size="26">
+    <button type="button" class="btn btn-danger" id="boton_buscar">Buscar</button>
+    <h1>para el carrito usar BADGES de bootstrap para mostrar el numero de libros que ya se cargaron en el carrito</h1>
 
+      <div id="listado_libros">
 
+      </div>
 
 
     <script src="script.js"></script>
