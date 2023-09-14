@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <title>Tienda de libros en linea</title>
+    <title>Carrito</title>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="contenedor">
         <div class="container-fluid">
@@ -59,21 +56,33 @@
           </div>
         </div>
       </nav>
-    <h1>Tienda de libros en linea</h1>
+    <h1>Carrito de compras</h1>
 
-    <input type="text" placeholder="Busque el libro por título o por autor" id="input_buscar" size="26">
-    <button type="button" class="btn btn-primary" id="boton_buscar">Buscar</button>
-    <h6>para el carrito usar BADGES de bootstrap para mostrar el numero de libros que ya se cargaron en el carrito</h6>
+      <table id="tabla-carrito" class="table table-hover">
+        <th>Titulo</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+        <th>Eliminar</th>
+        <tr>
+            <td>Libro 1</td>
+            <td>100</td>
+            <td>1</td>
+            <td>100</td>
+            <td><button class="btn btn-danger">Eliminar</button></td>
+        </tr>
+      </table>
 
-      <div id="listado_libros">
 
-      </div>
 
-      
+
+
+
+
+
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
 </body>
-
 </html>
