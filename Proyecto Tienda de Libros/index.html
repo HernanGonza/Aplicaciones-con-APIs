@@ -62,14 +62,22 @@
     <h1>Tienda de libros en linea</h1>
 
     <input type="text" placeholder="Busque el libro por título o por autor" id="input_buscar" size="26">
-    <button type="button" class="btn btn-primary" id="boton_buscar">Buscar</button>
+    <button type="button" class="btn btn-primary" id="boton_buscar_titulo">Buscar por titulo</button>
+    <button type="button" class="btn btn-primary" id="boton_buscar_autor">Buscar por autor</button>
     <h6>para el carrito usar BADGES de bootstrap para mostrar el numero de libros que ya se cargaron en el carrito</h6>
 
       <div id="listado_libros">
 
       </div>
 
-      
+      <button type="button" class="btn btn-primary" id="boton_anterior">Anterior</button>
+      <button type="button" class="btn btn-primary" id="boton_siguiente">Siguiente</button>
+      <br>
+
+      <input type="checkbox" id="checkbox" name="checkbox">
+      <label for="checkbox">Espanol</label>
+      <input type="checkbox" id="checkbox2" name="checkbox2">
+      <label for="checkbox2">Ingles</label>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
