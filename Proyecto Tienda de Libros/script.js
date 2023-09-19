@@ -41,13 +41,22 @@ function agregarAlCarrito(event) {
     nuevaFila.innerHTML = `
         <td>${libro}</td>
         <td>${precio}</td>
-        <td>1</td>
+        <td><input type="number" min="1" max="100" value="1"></td>
         <td>${precio}</td>
         <td><button type="button" class="btn btn-danger">Eliminar</button></td>
     `;
     nuevaFila.classList.add('table');
     nuevaFila.classList.add('table-hover');
     tablaCarrito.appendChild(nuevaFila);
+    
+    const cantidadInput = nuevaFila.querySelector('input');
+    const subtotalCelda = nuevaFila.querySelector('td:nth-child(4)');
+    
+    cantidadInput.addEventListener('input', function() {
+      const cantidad = cantidadInput.value;
+      const subtotal = precio * cantidad;
+      subtotalCelda.textContent = subtotal;
+    });
     
     const botonEliminar = nuevaFila.querySelector('.btn-danger');
     botonEliminar.addEventListener('click', function() {
