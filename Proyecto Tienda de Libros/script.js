@@ -9,7 +9,7 @@ let boton_siguiente = document.getElementById('boton_siguiente');
 async function buscarLibroTitulo() {
     try {
         const input = input_buscar.value.trim();
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${input}"&maxResults=40`);
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${input}"&maxResults=40&langRestrict=es`);
         const infoLibro = await response.json();
         mostrarLibros(infoLibro);
     }
@@ -21,7 +21,7 @@ async function buscarLibroTitulo() {
 async function buscarLibroAutor() {
     try {
         const input = input_buscar.value.trim();
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${input}"`);
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${input}"&maxResults=40&langRestrict=es`);
         const infoLibro = await response.json();
         mostrarLibros(infoLibro);
     }
@@ -76,26 +76,65 @@ for (let i = 0; i < infoLibro.items.length; i++) {
         div_card.appendChild(disponibilidad);
         const precio = document.createElement('p');
         precio.classList.add('card-precio');
-        precio.textContent = 'Precio: $' + infoLibro.items[i].saleInfo.retailPrice.amount;
+        precio.textContent = infoLibro.items[i].saleInfo.retailPrice.amount;
         div_card.appendChild(precio);
         const boton_agregar_carrito = document.createElement('button');
         boton_agregar_carrito.classList.add('btn');
         boton_agregar_carrito.classList.add('btn-primary');
-        boton_agregar_carrito.id = infoLibro.items[i].id;
+        boton_agregar_carrito.classList.add('agregar-carrito');
         boton_agregar_carrito.textContent = 'Agregar al carrito';
         div_card.appendChild(boton_agregar_carrito);
+        boton_agregar_carrito.addEventListener('click', agregarAlCarrito);
+
     } else {
         const no_disponible = document.createElement('p');
         no_disponible.classList.add('card-disponibilidad');
         no_disponible.textContent = 'No disponible';
         div_card.appendChild(no_disponible);
     }
-
-    
-
 }}
 
+const botonCarrito = document.getElementsByClassName('boton-carrito');
+const tablaCarrito = document.getElementById('tabla-carrito');
+
+function agregarAlCarrito(event) {
+    const boton = event.target.id;
+    console.log(boton);
+    const nuevaFila = document.createElement('tr');
+    nuevaFila.innerHTML = `
+    <td>${event.target.parentElement.textContent}</td>
+  
+    `;
+    tablaCarrito.appendChild(nuevaFila);
+}
 
 
+
+
+
+
+//     for (let i = 0; i < 5; i++) {
+//         const celda = nuevaFila.insertCell();
+//         switch (i) {
+//             case 0:
+//                 const tituloLibro = document.createElement('h2');
+//                 tituloLibro.textContent = titulo;
+//                 celda.appendChild(inputTarea);
+//                 break;
+//             case 1:
+//                 const precioLibro = document.createElement('p');
+//                 precioLibro.textContent = precio;
+//                 celda.appendChild(precioLibro);
+//                 break;
+//             case 2:
+//                 const cantidadLibro = document.createElement('input');
+//                 cantidadLibro.type = 'number';
+//                 cantidadLibro.value = 1;
+//                 celda.appendChild(cantidadLibro);
+//                 break;
+//             case 3:
+//                 const subtotalLibro = document.createElement('p');
+//                 subtotalLibro.textContent = precio;
+// }}}
 
 
