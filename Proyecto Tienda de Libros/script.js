@@ -64,6 +64,7 @@ function agregarAlCarrito(event) {
     });
 }
 
+
 function mostrarLibros(infoLibro) {
     listado_libros.innerHTML = '';
     input_buscar.value = '';
