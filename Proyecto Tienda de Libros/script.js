@@ -5,11 +5,12 @@ let listado_libros = document.getElementById('listado_libros');
 let boton_anterior = document.getElementById('boton_anterior');
 let boton_siguiente = document.getElementById('boton_siguiente');
 let tablaCarrito = document.getElementById('tabla-carrito');
+let linea_total = document.getElementById('linea_total');
 
 async function buscarLibroTitulo() {
     try {
         const input = input_buscar.value.trim();
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${input}"&maxResults=40&langRestrict=es`);
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${input}"&maxResults=10&langRestrict=es`);
         const infoLibro = await response.json();
         mostrarLibros(infoLibro);
     }
@@ -21,7 +22,7 @@ async function buscarLibroTitulo() {
 async function buscarLibroAutor() {
     try {
         const input = input_buscar.value.trim();
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${input}"&maxResults=40&langRestrict=es`);
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${input}"&maxResults=10&langRestrict=es`);
         const infoLibro = await response.json();
         mostrarLibros(infoLibro);
     }
@@ -34,6 +35,7 @@ boton_buscar_titulo.addEventListener('click', buscarLibroTitulo);
 boton_buscar_autor.addEventListener('click', buscarLibroAutor);
 
 function agregarAlCarrito(event) {
+
     const card = event.target.parentElement;
     const libro = card.getElementsByClassName('card-title')[0].textContent;
     const precio = card.getElementsByClassName('card-precio')[0].textContent;
@@ -42,33 +44,69 @@ function agregarAlCarrito(event) {
         <td>${libro}</td>
         <td>${precio}</td>
         <td><input type="number" min="1" max="100" value="1"></td>
-        <td>${precio}</td>
+        <td class="subtotal">${precio}</td>
         <td><button type="button" class="btn btn-danger">Eliminar</button></td>
     `;
+
     nuevaFila.classList.add('table');
     nuevaFila.classList.add('table-hover');
     tablaCarrito.appendChild(nuevaFila);
-    
+
+
+
     const cantidadInput = nuevaFila.querySelector('input');
     const subtotalCelda = nuevaFila.querySelector('td:nth-child(4)');
-    
-    cantidadInput.addEventListener('input', function() {
-      const cantidad = cantidadInput.value;
-      const subtotal = precio * cantidad;
-      subtotalCelda.textContent = subtotal;
+
+
+
+
+
+
+    cantidadInput.addEventListener('input', function () {
+        const cantidad = cantidadInput.value;
+        const cantidadAnterior = cantidadInput.value - 1;
+            const subtotal = precio * cantidad;
+            subtotalCelda.textContent = Math.round(subtotal * 100) / 100;
+        if (cantidadAnterior < cantidadInput.value) {
+            calcularTotalSuma();
+        }else {
+            calcularTotalResta();
+        }
+
+
     });
-    
+
+    let celdaTotal = document.getElementById('celda-total');
+
+    function calcularTotalSuma() {
+        celdaTotal.textContent = Math.round((Number(celdaTotal.textContent) - Number(precio)) * 100) / 100;
+        celdaTotal.textContent = Math.round((Number(celdaTotal.textContent) + Number(subtotalCelda.textContent)) * 100) / 100;
+    }
+    function calcularTotalResta() {
+        celdaTotal.textContent = Math.round((Number(celdaTotal.textContent) - Number(precio)) * 100) / 100;
+    }
+
+
+
+
+
+
     const botonEliminar = nuevaFila.querySelector('.btn-danger');
-    botonEliminar.addEventListener('click', function() {
+    botonEliminar.addEventListener('click', function () {
         nuevaFila.remove();
+        calcularTotalResta();
     });
+
+
+    calcularTotalSuma();
+
 }
 
 
 function mostrarLibros(infoLibro) {
     listado_libros.innerHTML = '';
     input_buscar.value = '';
-    
+
     for (let i = 0; i < infoLibro.items.length; i++) {
         const div_card = document.createElement('div');
         div_card.classList.add('card');
@@ -104,12 +142,12 @@ function mostrarLibros(infoLibro) {
             disponibilidad.classList.add('card-disponibilidad');
             disponibilidad.textContent = 'Disponible';
             div_card.appendChild(disponibilidad);
-            
+
             const precio = document.createElement('p');
             precio.classList.add('card-precio');
             precio.textContent = infoLibro.items[i].saleInfo.retailPrice.amount;
             div_card.appendChild(precio);
-            
+
             const boton_agregar_carrito = document.createElement('button');
             boton_agregar_carrito.classList.add('btn');
             boton_agregar_carrito.classList.add('btn-primary');
@@ -120,6 +158,7 @@ function mostrarLibros(infoLibro) {
         }
     }
 }
+
 
 
 
