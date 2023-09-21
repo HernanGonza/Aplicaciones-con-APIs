@@ -85,7 +85,7 @@ function calcularTotal() {
         console.log(sumaTotales);
     }
     console.log(sumaTotales);
-    celdaTotal.innerHTML = sumaTotales;
+    celdaTotal.innerHTML = Math.round(sumaTotales * 100) / 100;
 console.log(arregloSubtotales);
 }
 
