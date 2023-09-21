@@ -39,67 +39,43 @@ function agregarAlCarrito(event) {
     const card = event.target.parentElement;
     const botonCarrito = event.target;
     botonCarrito.disabled = true;
+    let cantidad = 1;
     const libro = card.getElementsByClassName('card-title')[0].textContent;
     const precio = card.getElementsByClassName('card-precio')[0].textContent;
     const nuevaFila = document.createElement('tr');
     nuevaFila.innerHTML = `
         <td>${libro}</td>
         <td>${precio}</td>
-        <td><input type="number" min="1" max="100" value="1"></td>
+        <td style="display: flex; flex-direction: row; justify-content: space-between;"><button id="menos" style="visibility:hidden;">-</button><p id="cantidadProducto">${cantidad}</p><button id="mas">+</button></td>
         <td class="subtotal">${precio}</td>
         <td><button type="button" class="btn btn-danger">Eliminar</button></td>
     `;
-    
     nuevaFila.classList.add('table');
     nuevaFila.classList.add('table-hover');
     tablaCarrito.appendChild(nuevaFila);
+
     
+    let subtotalCelda = nuevaFila.querySelector('td:nth-child(4)');
 
-    const cantidadInput = nuevaFila.querySelector('input');
-    const subtotalCelda = nuevaFila.querySelector('td:nth-child(4)');
-
-    cantidadInput.addEventListener('input', function () {
-        const cantidad = cantidadInput.value;
-        const cantidadAnterior = cantidadInput.value - 1;
-            const subtotal = precio * cantidad;
-            subtotalCelda.textContent = Math.round(subtotal * 100) / 100;
-            calcularTotal();
+    mas.addEventListener('click', function () {
+        cantidad = cantidad + 1;
+        document.getElementById('cantidadProducto').textContent = cantidad;
+        
+        calcularSubtotal(cantidad)
     });
-    calcularTotal();
 
+    function calcularSubtotal(cantidad) {
+            let subtotal = precio * cantidad;
+            subtotalCelda.textContent = Math.round(subtotal * 100) / 100;
+    };
 
-function calcularTotal() {
-    let celdaTotal = document.getElementById('celda-total');
-    let arregloSubtotales = [];
-    let sumaTotales = 0;
-    
-
-    const filas = document.getElementById('tabla-carrito').getElementsByTagName('tr');
-    for (let i = 0; i < filas.length; i++) {
-        const celda = filas[i].getElementsByTagName('td');
-        const subtotal = parseFloat(celda[3].innerText);
-        arregloSubtotales.push(subtotal);
-    }
-    for (let i = 0; i < arregloSubtotales.length; i++) {
-        sumaTotales += arregloSubtotales[i];
-        console.log(sumaTotales);
-    }
-    console.log(sumaTotales);
-    celdaTotal.innerHTML = sumaTotales;
-console.log(arregloSubtotales);
-}
-
-
-
-
-
-    
 
     const botonEliminar = nuevaFila.querySelector('.btn-danger');
     botonEliminar.addEventListener('click', function () {
         nuevaFila.remove();
+        cantidad = 0;
         botonCarrito.disabled = false;
-        calcularTotal();
+        
     });
 }
 
