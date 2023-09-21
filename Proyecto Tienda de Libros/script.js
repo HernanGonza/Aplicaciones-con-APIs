@@ -192,4 +192,36 @@ boton_siguiente.addEventListener('click', () => {
 
 
 
+//JavaScript para modal
+let botonConfirmar = document.getElementById('boton_confirmar');
+let tituloMedioPago = document.getElementById('titulo_medio_pago');
+let parrafoMedioPago = document.getElementById('parrafo_medio_pago');
+let selectMedioPago = document.getElementById('select_medio_pago');
 
+function medioPago() {
+    switch (selectMedioPago.value) {
+        case 'Efectivo':
+            tituloMedioPago.textContent = 'Efectivo';
+            parrafoMedioPago.textContent = 'Pago en efectivo';
+            break;
+        case 'Tarjeta de credito':
+            tituloMedioPago.textContent = 'Tarjeta de credito';
+            parrafoMedioPago.textContent = 'Pago con tarjeta de credito';
+            break;
+        case 'Tarjeta de debito':
+            tituloMedioPago.textContent = 'Tarjeta de debito';
+            parrafoMedioPago.textContent = 'Pago con tarjeta de debito';
+            break;
+        case 'Transferencia':
+            tituloMedioPago.textContent = 'Transferencia';
+            parrafoMedioPago.textContent = 'Pago con transferencia';
+            break;
+        case 'Mercado Pago':
+            tituloMedioPago.textContent = 'Mercado Pago';
+            parrafoMedioPago.textContent = 'Pago con mercado pago';
+            break;
+    }   
+}
+
+botonConfirmar.addEventListener('click', medioPago);
+selectMedioPago.addEventListener('change', medioPago);

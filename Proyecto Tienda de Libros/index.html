@@ -89,9 +89,7 @@
         <td></td>
         <td>Total</td>
         <td id="celda-total"></td>
-        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-          Launch static backdrop modal
-        </button></td>
+        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="boton_confirmar">Confirmar compra</button></td>
       </tr>
     </tfoot>
   </table>
@@ -105,16 +103,16 @@
         </div>
         <div class="modal-body">
           <h2 class="fs-5">Elija su medio de pago</h2>
-  <select name="" id="">
-    <option value="">Efectivo</option>
-    <option value="">Tarjeta de credito</option>
-    <option value="">Tarjeta de debito</option>
-    <option value="">Transferencia</option>
-    <option value="">Mercado Pago</option>
+  <select name="select_medio_pago" id="select_medio_pago">
+    <option value="Efectivo">Efectivo</option>
+    <option value="Tarjeta de credito">Tarjeta de credito</option>
+    <option value="Tarjeta de debito">Tarjeta de debito</option>
+    <option value="Transferencia">Transferencia</option>
+    <option value="Mercado Pago">Mercado Pago</option>
   </select>
   <hr>
-  <h2 class="fs-5">Tooltips in a modal</h2>
-  <p><a href="#" data-bs-toggle="tooltip" title="Tooltip">This link</a> and <a href="#" data-bs-toggle="tooltip" title="Tooltip">that link</a> have tooltips on hover.</p>
+  <h2 class="fs-5" id="titulo_medio_pago">Aca se llena con el titulo del medio de pago segun lo que se elija en el select</h2>
+  <p id="parrafo_medio_pago">aca se llena con el switch segun medio de pago</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
