@@ -8,13 +8,13 @@ let tablaCarrito = document.getElementById('tabla-carrito');
 let linea_total = document.getElementById('linea_total');
 let infoLibro;
 let cantidadPaginas;
-let cantidadLibros = 2
+let cantidadLibros = 8
 let pagina = 1
 //Funcion para buscar libros segun el titulo
 async function buscarLibroTitulo() {
     try {
         const input = input_buscar.value.trim();
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${input}"&maxResults=10&langRestrict=es`);
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${input}"&maxResults=40&langRestrict=es`);
         infoLibro = await response.json();
         let cantidadPaginas = Math.ceil(infoLibro.items.length/cantidadLibros)
         mostrarLibros(infoLibro);
@@ -28,7 +28,7 @@ async function buscarLibroTitulo() {
 async function buscarLibroAutor() {
     try {
         const input = input_buscar.value.trim();
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${input}"&maxResults=10&langRestrict=es`);
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${input}"&maxResults=40&langRestrict=es`);
         infoLibro = await response.json();
         mostrarLibros(infoLibro);
         cantidadPaginas = Math.ceil(infoLibro.items.length/cantidadLibros)
@@ -164,6 +164,13 @@ function mostrarLibros(infoLibro) {
             boton_agregar_carrito.textContent = 'Agregar al carrito';
             div_card.appendChild(boton_agregar_carrito);
             boton_agregar_carrito.addEventListener('click', agregarAlCarrito);
+        } else {
+            const boton_agregar_carrito = document.createElement('button');
+            boton_agregar_carrito.classList.add('btn');
+            boton_agregar_carrito.classList.add('btn-primary');
+            boton_agregar_carrito.classList.add('agregar-carrito');
+            boton_agregar_carrito.textContent = 'No disponible';
+            div_card.appendChild(boton_agregar_carrito);
         }
     }
 }   
