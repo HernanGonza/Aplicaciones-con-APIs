@@ -6,13 +6,17 @@ let boton_anterior = document.getElementById('boton_anterior');
 let boton_siguiente = document.getElementById('boton_siguiente');
 let tablaCarrito = document.getElementById('tabla-carrito');
 let linea_total = document.getElementById('linea_total');
-
+let infoLibro;
+let cantidadPaginas;
+let cantidadLibros = 2
+let pagina = 1
 //Funcion para buscar libros segun el titulo
 async function buscarLibroTitulo() {
     try {
         const input = input_buscar.value.trim();
         const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${input}"&maxResults=10&langRestrict=es`);
-        const infoLibro = await response.json();
+        infoLibro = await response.json();
+        let cantidadPaginas = Math.ceil(infoLibro.items.length/cantidadLibros)
         mostrarLibros(infoLibro);
     }
     catch (error) {
@@ -25,8 +29,9 @@ async function buscarLibroAutor() {
     try {
         const input = input_buscar.value.trim();
         const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${input}"&maxResults=10&langRestrict=es`);
-        const infoLibro = await response.json();
+        infoLibro = await response.json();
         mostrarLibros(infoLibro);
+        cantidadPaginas = Math.ceil(infoLibro.items.length/cantidadLibros)
     }
     catch (error) {
         console.log(error);
@@ -108,7 +113,10 @@ function mostrarLibros(infoLibro) {
     listado_libros.innerHTML = '';
     input_buscar.value = '';
 
-    for (let i = 0; i < infoLibro.items.length; i++) {
+    let indice = (pagina - 1) * cantidadLibros
+    let final = indice + cantidadLibros
+
+    for (let i = indice;  i < final && i < infoLibro.items.length; i++) {
         const div_card = document.createElement('div');
         div_card.classList.add('card');
         div_card.style.width = '18rem';
@@ -158,7 +166,22 @@ function mostrarLibros(infoLibro) {
             boton_agregar_carrito.addEventListener('click', agregarAlCarrito);
         }
     }
-}
+}   
+//eventos de botones de cambio de pagina
+boton_anterior.addEventListener('click', () => {
+    console.log("btn anterior");
+    if(pagina > 1){
+        pagina--;
+        mostrarLibros(infoLibro);
+    }
+});
+boton_siguiente.addEventListener('click', () => {
+    console.log("btn siguiente");
+    if(pagina < cantidadPaginas){
+        pagina++;
+        mostrarLibros(infoLibro);
+    }
+});
 
 
 
