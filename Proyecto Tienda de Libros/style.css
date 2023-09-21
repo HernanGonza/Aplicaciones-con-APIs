@@ -7,7 +7,7 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: olive;
+    background-color: rgb(249, 246, 212);
 
 }
 
@@ -15,8 +15,17 @@ body {
 h1 {
     margin-top: 10px;
     margin-bottom: 20px;
-    color: black;
+    background: linear-gradient(to right, black,rgb(120, 89, 20), goldenrod,rgb(141, 90, 6), black);
+    -webkit-text-fill-color:transparent;
+    -webkit-background-clip: text;
     text-align: center;
+    background-color: black;
+    font-size: 80px;
+}
+#input_buscar {
+    border-color: goldenrod;
+    border-width: 2px;
+    width: 300px;
 }
 
 #contenedor {
@@ -33,13 +42,20 @@ h1 {
 }
 
 #nav_bar {
-    background-color: blue;
+    background: linear-gradient(to right, black,rgb(120, 89, 20), goldenrod,rgb(141, 90, 6), black);
     position: absolute;
+    color: #f9e29c;
 }
 
 #navbarNav {
     display: flex;
     justify-content: flex-end;
+}
+.navbar-brand {
+    color: white;
+}
+.nav-link {
+    color: white;
 }
 
 #listado_libros {
@@ -51,7 +67,10 @@ h1 {
 
 .card {
     margin : 20px;
-    background-color: brown;
+    background-color: rgb(253, 252, 225);
+    border-style: outset;
+    border-color: #f9e29c;
+    border-width: 2px;
 }
 
 .card-title {
@@ -68,9 +87,11 @@ h1 {
 }
 
 .btn:hover {
-    background-color: greenyellow;
-    color: black;
-    font-weight: bold;
-    transform: scale(1.2);
+    background-color: goldenrod;
+    text-shadow: #333;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
     
+}
+th{
+    background-color: goldenrod;
 }
