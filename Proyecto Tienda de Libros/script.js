@@ -7,6 +7,7 @@ let boton_siguiente = document.getElementById('boton_siguiente');
 let tablaCarrito = document.getElementById('tabla-carrito');
 let linea_total = document.getElementById('linea_total');
 
+//Funcion para buscar libros segun el titulo
 async function buscarLibroTitulo() {
     try {
         const input = input_buscar.value.trim();
@@ -19,6 +20,7 @@ async function buscarLibroTitulo() {
     }
 }
 
+//Funcion para buscar libros segun el autor
 async function buscarLibroAutor() {
     try {
         const input = input_buscar.value.trim();
@@ -34,6 +36,10 @@ async function buscarLibroAutor() {
 boton_buscar_titulo.addEventListener('click', buscarLibroTitulo);
 boton_buscar_autor.addEventListener('click', buscarLibroAutor);
 
+//Funcion para agregar cada elemento en el carrito.
+//Incluye la funcion interna para eliminar cada elemento del carrito
+//Incluye la funcion interna para cambiar los subtotales dependiendo de la cantidad
+//Incluye la funcion interna para calcular el total de todos los elementos
 function agregarAlCarrito(event) {
     
     const card = event.target.parentElement;
@@ -89,12 +95,6 @@ function calcularTotal() {
 console.log(arregloSubtotales);
 }
 
-
-
-
-
-    
-
     const botonEliminar = nuevaFila.querySelector('.btn-danger');
     botonEliminar.addEventListener('click', function () {
         nuevaFila.remove();
@@ -103,7 +103,7 @@ console.log(arregloSubtotales);
     });
 }
 
-
+//Funcion para mostrar los libros en las tarjetas despues de la busqueda
 function mostrarLibros(infoLibro) {
     listado_libros.innerHTML = '';
     input_buscar.value = '';
