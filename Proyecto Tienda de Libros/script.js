@@ -147,6 +147,13 @@ function mostrarLibros(infoLibro) {
             const imagen_card = document.createElement('img');
             imagen_card.src = infoLibro.items[i].volumeInfo.imageLinks.thumbnail;
             imagen_card.classList.add('card-img-top');
+            imagen_card.style.height = '400px';
+            div_card.appendChild(imagen_card);
+        }else {
+            const imagen_card = document.createElement('img');
+            imagen_card.src = './img/noDisponible.jpeg';
+            imagen_card.classList.add('card-img-top');
+            imagen_card.style.height = '400px';
             div_card.appendChild(imagen_card);
         }
 
@@ -177,16 +184,16 @@ function mostrarLibros(infoLibro) {
             div_card.appendChild(precio);
             const boton_agregar_carrito = document.createElement('button');
             boton_agregar_carrito.classList.add('btn');
-            boton_agregar_carrito.classList.add('btn-primary');
+            boton_agregar_carrito.classList.add('btn-dark');
             boton_agregar_carrito.classList.add('agregar-carrito');
             boton_agregar_carrito.textContent = 'Agregar al carrito';
             div_card.appendChild(boton_agregar_carrito);
             boton_agregar_carrito.addEventListener('click', agregarAlCarrito);
         } else {
-            const boton_agregar_carrito = document.createElement('button');
-            boton_agregar_carrito.classList.add('btn');
-            boton_agregar_carrito.classList.add('btn-primary');
-            boton_agregar_carrito.classList.add('agregar-carrito');
+            const boton_agregar_carrito = document.createElement('div');
+            boton_agregar_carrito.classList.add('alert');
+            boton_agregar_carrito.classList.add('alert-danger');
+            boton_agregar_carrito.role = 'alert';
             boton_agregar_carrito.textContent = 'No disponible';
             div_card.appendChild(boton_agregar_carrito);
         }
