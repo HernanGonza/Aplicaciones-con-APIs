@@ -20,7 +20,7 @@ h1 {
     -webkit-background-clip: text;
     text-align: center;
     background-color: black;
-    font-size: 80px;
+    font-size: 80en;
 }
 #input_buscar {
     border-color: goldenrod;
@@ -91,7 +91,4 @@ h1 {
     text-shadow: #333;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
     
-}
-th{
-    background-color: goldenrod;
 }
