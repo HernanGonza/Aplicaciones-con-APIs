@@ -14,7 +14,7 @@ let pagina = 1
 window.onload = buscarLibroRelevantes();
 async function buscarLibroRelevantes() {
     try {
-        const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=bestsellers&orderBy=newest');
+        const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=bestsellers&orderBy=newest&maxResults=40&langRestrict=es');
         infoLibro = await response.json();
         cantidadPaginas = Math.ceil(infoLibro.items.length / cantidadLibros)
         mostrarLibros(infoLibro);
