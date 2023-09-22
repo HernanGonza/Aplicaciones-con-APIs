@@ -117,6 +117,7 @@ function agregarAlCarrito(event) {
         }
         
         celdaTotal.innerHTML = Math.round(sumaTotales * 100) / 100;
+        celdaTotal.style.fontWeight = 'bolder';
         
     }
 
