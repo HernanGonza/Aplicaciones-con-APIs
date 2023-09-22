@@ -17,7 +17,8 @@ h1 {
     margin-bottom: 20px;
     background: linear-gradient(to right, black,rgb(120, 89, 20), goldenrod,rgb(141, 90, 6), black);
     -webkit-text-fill-color:transparent;
-    -webkit-background-clip: text;
+    -webkit-background-clip:text;
+    background-clip: text;
     text-align: center;
     background-color: black;
     font-size: 80en;
@@ -91,4 +92,24 @@ h1 {
     text-shadow: #333;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
     
+}
+
+a.scroll-top {
+	color: #fff;
+	display: none;
+	width: 30px;
+	height: 30px;
+	position: fixed;
+	z-index: 1000;
+	bottom: 50px;
+	right: 30px;
+	font-size: 20px;
+	background: #222;
+	border-radius: 3px !important;
+	text-align: center;
+	border: 1px solid hsla(0, 0%, 78%, 0.3)
+}
+a.scroll-top i {
+	position: relative;
+	top: 2px;
 }

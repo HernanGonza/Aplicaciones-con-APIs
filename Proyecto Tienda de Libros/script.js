@@ -281,3 +281,18 @@ function procesarPago() {
         })
         .catch(error => console.error("Error al procesar el pago: " + error));
 }
+
+//Funcion para que el boton de scroll-top aparezca
+$(window).scroll(function() {
+    if ($(this).scrollTop() > 300) {
+        $('a.scroll-top').fadeIn('slow');
+    } else {
+        $('a.scroll-top').fadeOut('slow');
+    }
+});
+
+//Funcion para que funcione el boton de scroll-top
+$('a.scroll-top').click(function(event) {
+    event.preventDefault();
+    $('html, body').animate({scrollTop: 0}, 200);
+});
