@@ -6,13 +6,17 @@ let boton_anterior = document.getElementById('boton_anterior');
 let boton_siguiente = document.getElementById('boton_siguiente');
 let tablaCarrito = document.getElementById('tabla-carrito');
 let linea_total = document.getElementById('linea_total');
-
+let infoLibro;
+let cantidadPaginas;
+let cantidadLibros = 8
+let pagina = 1
 //Funcion para buscar libros segun el titulo
 async function buscarLibroTitulo() {
     try {
         const input = input_buscar.value.trim();
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${input}"&maxResults=10&langRestrict=es`);
-        const infoLibro = await response.json();
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${input}"&maxResults=40&langRestrict=es`);
+        infoLibro = await response.json();
+        let cantidadPaginas = Math.ceil(infoLibro.items.length/cantidadLibros)
         mostrarLibros(infoLibro);
     }
     catch (error) {
@@ -24,9 +28,10 @@ async function buscarLibroTitulo() {
 async function buscarLibroAutor() {
     try {
         const input = input_buscar.value.trim();
-        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${input}"&maxResults=10&langRestrict=es`);
-        const infoLibro = await response.json();
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${input}"&maxResults=40&langRestrict=es`);
+        infoLibro = await response.json();
         mostrarLibros(infoLibro);
+        cantidadPaginas = Math.ceil(infoLibro.items.length/cantidadLibros)
     }
     catch (error) {
         console.log(error);
@@ -108,7 +113,10 @@ function mostrarLibros(infoLibro) {
     listado_libros.innerHTML = '';
     input_buscar.value = '';
 
-    for (let i = 0; i < infoLibro.items.length; i++) {
+    let indice = (pagina - 1) * cantidadLibros
+    let final = indice + cantidadLibros
+
+    for (let i = indice;  i < final && i < infoLibro.items.length; i++) {
         const div_card = document.createElement('div');
         div_card.classList.add('card');
         div_card.style.width = '18rem';
@@ -156,10 +164,64 @@ function mostrarLibros(infoLibro) {
             boton_agregar_carrito.textContent = 'Agregar al carrito';
             div_card.appendChild(boton_agregar_carrito);
             boton_agregar_carrito.addEventListener('click', agregarAlCarrito);
+        } else {
+            const boton_agregar_carrito = document.createElement('button');
+            boton_agregar_carrito.classList.add('btn');
+            boton_agregar_carrito.classList.add('btn-primary');
+            boton_agregar_carrito.classList.add('agregar-carrito');
+            boton_agregar_carrito.textContent = 'No disponible';
+            div_card.appendChild(boton_agregar_carrito);
         }
     }
+}   
+//eventos de botones de cambio de pagina
+boton_anterior.addEventListener('click', () => {
+    console.log("btn anterior");
+    if(pagina > 1){
+        pagina--;
+        mostrarLibros(infoLibro);
+    }
+});
+boton_siguiente.addEventListener('click', () => {
+    console.log("btn siguiente");
+    if(pagina < cantidadPaginas){
+        pagina++;
+        mostrarLibros(infoLibro);
+    }
+});
+
+
+
+//JavaScript para modal
+let botonConfirmar = document.getElementById('boton_confirmar');
+let tituloMedioPago = document.getElementById('titulo_medio_pago');
+let parrafoMedioPago = document.getElementById('parrafo_medio_pago');
+let selectMedioPago = document.getElementById('select_medio_pago');
+
+function medioPago() {
+    switch (selectMedioPago.value) {
+        case 'Efectivo':
+            tituloMedioPago.textContent = 'Efectivo';
+            parrafoMedioPago.textContent = 'Pago en efectivo';
+            break;
+        case 'Tarjeta de credito':
+            tituloMedioPago.textContent = 'Tarjeta de credito';
+            parrafoMedioPago.textContent = 'Pago con tarjeta de credito';
+            break;
+        case 'Tarjeta de debito':
+            tituloMedioPago.textContent = 'Tarjeta de debito';
+            parrafoMedioPago.textContent = 'Pago con tarjeta de debito';
+            break;
+        case 'Transferencia':
+            tituloMedioPago.textContent = 'Transferencia';
+            parrafoMedioPago.textContent = 'Pago con transferencia';
+            break;
+        case 'Mercado Pago':
+            tituloMedioPago.textContent = 'Mercado Pago';
+            parrafoMedioPago.textContent = 'Pago con mercado pago';
+            break;
+    }   
 }
 
-
-
-
+botonConfirmar.addEventListener('click', medioPago);
+selectMedioPago.addEventListener('change', medioPago);
