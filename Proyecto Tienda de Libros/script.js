@@ -224,23 +224,90 @@ let tituloMedioPago = document.getElementById('titulo_medio_pago');
 let parrafoMedioPago = document.getElementById('parrafo_medio_pago');
 let selectMedioPago = document.getElementById('select_medio_pago');
 let precioModal = document.getElementById('precioModal');
-
+let celdaTotal = document.getElementById('celda-total');
 
 function medioPago() {
     switch (selectMedioPago.value) {
         case 'Efectivo':
+            parrafoMedioPago.innerHTML = '';
             tituloMedioPago.textContent = 'Efectivo';
-            parrafoMedioPago.textContent = 'Pago en efectivo';
-            
+            parrafoMedioPago.textContent = '$' + celdaTotal.innerText;
             break;
+
         case 'Tarjeta de credito':
+            parrafoMedioPago.innerHTML = '';
             tituloMedioPago.textContent = 'Tarjeta de credito';
-            parrafoMedioPago.textContent = 'Pago con tarjeta de credito';
+            let formulario = document.createElement('div');
+            formulario.classList.add('form-floating');
+            formulario.classList.add('mb-3');
+            formulario.innerHTML = `
+                <input type="text" class="form-control" id="nombre_tarjeta" placeholder="Juan Perez">
+                <label for="nombre_tarjeta">Nombre en la tarjeta</label>
+            `;
+            parrafoMedioPago.appendChild(formulario);
+            let formulario1 = document.createElement('div');
+            formulario1.classList.add('form-floating');
+            formulario1.classList.add('mb-3');
+            formulario1.innerHTML = `
+                <input type="text" class="form-control" id="numero_tarjeta" placeholder="0000 0000 0000 0000" maxlength="16" minlength="16" max="9999999999999999" min="1000000000000000">
+                <label for="numero_tarjeta">Numero de tarjeta</label>
+            `;
+            parrafoMedioPago.appendChild(formulario1);
+            let formulario2 = document.createElement('div');
+            formulario2.classList.add('form-floating');
+            formulario2.classList.add('mb-3');
+            formulario2.innerHTML = `
+                <input type="date" class="form-control" id="fecha_vencimiento">
+                <label for="fecha_vencimiento">Fecha de vencimiento</label>
+            `;
+            parrafoMedioPago.appendChild(formulario2);
+            let formulario3 = document.createElement('div');
+            formulario3.classList.add('form-floating');
+            formulario3.classList.add('mb-3');
+            formulario3.innerHTML = `
+                <input type="text" class="form-control" id="cvv" placeholder="000" maxlength="3" minlength="3" max="999" min="100">
+                <label for="cvv">CVV</label>
+            `;
+            parrafoMedioPago.appendChild(formulario3);
             break;
+
         case 'Tarjeta de debito':
+            parrafoMedioPago.innerHTML = '';
             tituloMedioPago.textContent = 'Tarjeta de debito';
-            parrafoMedioPago.textContent = 'Pago con tarjeta de debito';
+            let formularioDebito = document.createElement('div');
+            formularioDebito.classList.add('form-floating');
+            formularioDebito.classList.add('mb-3');
+            formularioDebito.innerHTML = `
+                <input type="text" class="form-control" id="nombre_tarjeta" placeholder="Juan Perez">
+                <label for="nombre_tarjeta">Nombre en la tarjeta</label>
+            `;
+            parrafoMedioPago.appendChild(formularioDebito);
+            let formularioDebito1 = document.createElement('div');
+            formularioDebito1.classList.add('form-floating');
+            formularioDebito1.classList.add('mb-3');
+            formularioDebito1.innerHTML = `
+                <input type="text" class="form-control" id="numero_tarjeta" placeholder="0000 0000 0000 0000" maxlength="16" minlength="16" max="9999999999999999" min="1000000000000000">
+                <label for="numero_tarjeta">Numero de tarjeta</label>
+            `;
+            parrafoMedioPago.appendChild(formularioDebito1);
+            let formularioDebito2 = document.createElement('div');
+            formularioDebito2.classList.add('form-floating');
+            formularioDebito2.classList.add('mb-3');
+            formularioDebito2.innerHTML = `
+                <input type="date" class="form-control" id="fecha_vencimiento">
+                <label for="fecha_vencimiento">Fecha de vencimiento</label>
+            `;
+            parrafoMedioPago.appendChild(formularioDebito2);
+            let formularioDebito3 = document.createElement('div');
+            formularioDebito3.classList.add('form-floating');
+            formularioDebito3.classList.add('mb-3');
+            formularioDebito3.innerHTML = `
+                <input type="text" class="form-control" id="cvv" placeholder="000" maxlength="3" minlength="3" max="999" min="100">
+                <label for="cvv">CVV</label>
+            `;
+            parrafoMedioPago.appendChild(formularioDebito3);
             break;
+
         case 'Transferencia':
             tituloMedioPago.textContent = 'Transferencia';
             parrafoMedioPago.textContent = 'Pago con transferencia';
