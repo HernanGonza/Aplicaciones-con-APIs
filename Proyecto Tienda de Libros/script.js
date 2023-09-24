@@ -102,7 +102,7 @@ function agregarAlCarrito(event) {
         let sumaTotales = 0;
         let celdaTotal = document.getElementById('celda-total');
         let arregloSubtotales = [];
-        
+
 
 
         const filas = document.getElementById('tabla-carrito').getElementsByTagName('tr');
@@ -113,12 +113,12 @@ function agregarAlCarrito(event) {
         }
         for (let i = 0; i < arregloSubtotales.length; i++) {
             sumaTotales += arregloSubtotales[i];
-            
+
         }
-        
+
         celdaTotal.innerHTML = Math.round(sumaTotales * 100) / 100;
         celdaTotal.style.fontWeight = 'bolder';
-        
+
     }
 
     const botonEliminar = nuevaFila.querySelector('.btn-danger');
@@ -150,7 +150,7 @@ function mostrarLibros(infoLibro) {
             imagen_card.classList.add('card-img-top');
             imagen_card.style.height = '400px';
             div_card.appendChild(imagen_card);
-        }else {
+        } else {
             const imagen_card = document.createElement('img');
             imagen_card.src = './img/noDisponible.jpeg';
             imagen_card.classList.add('card-img-top');
@@ -325,40 +325,68 @@ function medioPago() {
 
 botonConfirmar.addEventListener('click', medioPago);
 selectMedioPago.addEventListener('change', medioPago);
+let bodyModal = document.getElementById('body_modal');
 
-
+function habilitarBotonesAgregarAlCarrito() {
+    const botonesAgregar = document.querySelectorAll('.agregar-carrito');
+    botonesAgregar.forEach(boton => {
+        boton.disabled = false;
+    });
+}
 
 
 
 function procesarPago() {
-    // Simular el proceso de pago utilizando la API de pruebas
     fetch("https://jsonplaceholder.typicode.com/posts", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            compra: carrito,
-            success: 200
-        })// Envía el contenido del carrito como datos de pago 
+            title: celdaTotal.innerText,
+            body: selectMedioPago.value,
+            userId: 1
+        })
     })
         .then(response => response.json())
-
         .then(data => {
+            bodyModal.innerHTML = `
+                <div class="alert alert-success" role="alert">
+                    El pago se ha realizado correctamente
+                </div>
+            `;
             console.log(data);
-            if (data.success == 200) {
-                alert("¡Pago exitoso! Gracias por su compra.");
-                carrito = []; // Vacía el carrito después de un pago exitoso
-                actualizarCarrito(); // Actualiza la interfaz de usuario
-            } else {
-                alert("El pago no se pudo procesar. Intente nuevamente más tarde.");
-            }
+
+            setTimeout(function () {
+                let modal = document.getElementById("staticBackdrop");
+                modal.style.display = "none";
+
+                
+                let modalBackdrop = document.getElementsByClassName("modal-backdrop");
+                while (modalBackdrop.length > 0) {
+                    modalBackdrop[0].parentNode.removeChild(modalBackdrop[0]);
+                }
+                tablaCarrito.innerHTML = '';
+                celdaTotal.innerHTML = '';
+                $('html, body').animate({ scrollTop: 0 }, {
+                    duration: 200,
+                    complete: function () {
+                        $('html, body').css('overflow', 'auto');
+                    }
+                });
+                habilitarBotonesAgregarAlCarrito();
+            }, 2000);
         })
-        .catch(error => console.error("Error al procesar el pago: " + error));
+        .catch(error => {
+            alert('Error al procesar el pago');
+            console.log(error);
+        });
 }
 
+
+
 //Funcion para que el boton de scroll-top aparezca
-$(window).scroll(function() {
+$(window).scroll(function () {
     if ($(this).scrollTop() > 300) {
         $('a.scroll-top').fadeIn('slow');
     } else {
@@ -367,7 +395,11 @@ $(window).scroll(function() {
 });
 
 //Funcion para que funcione el boton de scroll-top
-$('a.scroll-top').click(function(event) {
+$('a.scroll-top').click(function (event) {
     event.preventDefault();
-    $('html, body').animate({scrollTop: 0}, 200);
+    $('html, body').animate({ scrollTop: 0 }, 200);
 });
+
+
+let botonPagar = document.getElementById('boton_pagar');
+botonPagar.addEventListener('click', procesarPago);
