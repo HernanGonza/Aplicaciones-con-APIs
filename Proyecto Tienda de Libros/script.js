@@ -327,12 +327,6 @@ botonConfirmar.addEventListener('click', medioPago);
 selectMedioPago.addEventListener('change', medioPago);
 let bodyModal = document.getElementById('body_modal');
 
-function habilitarBotonesAgregarAlCarrito() {
-    const botonesAgregar = document.querySelectorAll('.agregar-carrito');
-    botonesAgregar.forEach(boton => {
-        boton.disabled = false;
-    });
-}
 
 
 
@@ -358,27 +352,15 @@ function procesarPago() {
             console.log(data);
 
             setTimeout(function () {
-                let modal = document.getElementById("staticBackdrop");
-                modal.style.display = "none";
-
-                
-                let modalBackdrop = document.getElementsByClassName("modal-backdrop");
-                while (modalBackdrop.length > 0) {
-                    modalBackdrop[0].parentNode.removeChild(modalBackdrop[0]);
-                }
-                tablaCarrito.innerHTML = '';
-                celdaTotal.innerHTML = '';
-                $('html, body').animate({ scrollTop: 0 }, {
-                    duration: 200,
-                    complete: function () {
-                        $('html, body').css('overflow', 'auto');
-                    }
-                });
-                habilitarBotonesAgregarAlCarrito();
-            }, 2000);
+                window.location.reload();
+            }, 3000);
         })
         .catch(error => {
-            alert('Error al procesar el pago');
+            bodyModal.innerHTML = `
+                <div class="alert alert-danger" role="alert">
+                    No se pudo procesar el pago
+                </div>
+            `;
             console.log(error);
         });
 }
